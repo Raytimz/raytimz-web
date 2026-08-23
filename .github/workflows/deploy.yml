@@ -78,12 +78,10 @@ jobs:
     steps:
       - name: Configure Lightsail SSH
         env:
-          LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
           LIGHTSAIL_KNOWN_HOSTS: ${{ secrets.LIGHTSAIL_KNOWN_HOSTS }}
           LIGHTSAIL_SSH_KEY: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-          LIGHTSAIL_USER: ${{ secrets.LIGHTSAIL_USER }}
         run: |
-          for variable in LIGHTSAIL_HOST LIGHTSAIL_KNOWN_HOSTS LIGHTSAIL_SSH_KEY LIGHTSAIL_USER; do
+          for variable in LIGHTSAIL_KNOWN_HOSTS LIGHTSAIL_SSH_KEY; do
             if [ -z "${!variable}" ]; then
               echo "$variable is not configured." >&2
               exit 1
@@ -100,15 +98,20 @@ jobs:
       - name: Deploy the immutable website image
         env:
           DEPLOY_IMAGE: ghcr.io/raytimz/raytimz-web:${{ github.sha }}
-          LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
-          LIGHTSAIL_USER: ${{ secrets.LIGHTSAIL_USER }}
+          LIGHTSAIL_KNOWN_HOSTS: ${{ secrets.LIGHTSAIL_KNOWN_HOSTS }}
         run: |
+          LIGHTSAIL_HOST="$(printf '%s\n' "$LIGHTSAIL_KNOWN_HOSTS" | awk 'NR == 1 { print $1 }')"
+          if [ -z "$LIGHTSAIL_HOST" ]; then
+            echo "Unable to resolve the host from LIGHTSAIL_KNOWN_HOSTS." >&2
+            exit 1
+          fi
+
           ssh \
             -i "$HOME/.ssh/lightsail" \
             -o BatchMode=yes \
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
-            "$LIGHTSAIL_USER@$LIGHTSAIL_HOST" \
+            "ec2-user@$LIGHTSAIL_HOST" \
             "cd /home/ec2-user/raytimz-ops && git switch main && git pull --ff-only origin main && WEB_IMAGE='$DEPLOY_IMAGE' bash infrastructure/deploy/manual-deploy.sh --skip-git-pull"
 
       - name: Verify public routes
