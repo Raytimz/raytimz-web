@@ -1,0 +1,117 @@
+name: Validate, publish, and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+  publish:
+    needs: validate
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+        run: |
+          printf '%s' "$GHCR_TOKEN" \
+            | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+
+      - name: Build and publish deployment image
+        env:
+          IMAGE_REPOSITORY: ghcr.io/raytimz/raytimz-web
+        run: |
+          docker build \
+            --platform linux/amd64 \
+            --label "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}" \
+            --tag "${IMAGE_REPOSITORY}:main" \
+            --tag "${IMAGE_REPOSITORY}:${GITHUB_SHA}" \
+            .
+          docker push "${IMAGE_REPOSITORY}:main"
+          docker push "${IMAGE_REPOSITORY}:${GITHUB_SHA}"
+
+  deploy:
+    needs: publish
+    if: ${{ vars.DEPLOY_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://raytimz.com
+    steps:
+      - name: Configure Lightsail SSH
+        env:
+          LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
+          LIGHTSAIL_KNOWN_HOSTS: ${{ secrets.LIGHTSAIL_KNOWN_HOSTS }}
+          LIGHTSAIL_SSH_KEY: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          LIGHTSAIL_USER: ${{ secrets.LIGHTSAIL_USER }}
+        run: |
+          for variable in LIGHTSAIL_HOST LIGHTSAIL_KNOWN_HOSTS LIGHTSAIL_SSH_KEY LIGHTSAIL_USER; do
+            if [ -z "${!variable}" ]; then
+              echo "$variable is not configured." >&2
+              exit 1
+            fi
+          done
+
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$LIGHTSAIL_SSH_KEY" | tr -d '\r' > "$HOME/.ssh/lightsail"
+          chmod 600 "$HOME/.ssh/lightsail"
+          ssh-keygen -y -P '' -f "$HOME/.ssh/lightsail" > /dev/null
+          printf '%s\n' "$LIGHTSAIL_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+      - name: Deploy the immutable website image
+        env:
+          DEPLOY_IMAGE: ghcr.io/raytimz/raytimz-web:${{ github.sha }}
+          LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
+          LIGHTSAIL_USER: ${{ secrets.LIGHTSAIL_USER }}
+        run: |
+          ssh \
+            -i "$HOME/.ssh/lightsail" \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=yes \
+            "$LIGHTSAIL_USER@$LIGHTSAIL_HOST" \
+            "cd /home/ec2-user/raytimz-ops && git switch main && git pull --ff-only origin main && WEB_IMAGE='$DEPLOY_IMAGE' bash infrastructure/deploy/manual-deploy.sh --skip-git-pull"
+
+      - name: Verify public routes
+        run: |
+          curl --fail --silent --show-error --retry 5 --retry-delay 2 https://raytimz.com/ > /dev/null
+          curl --fail --silent --show-error --retry 5 --retry-delay 2 https://www.raytimz.com/ > /dev/null
