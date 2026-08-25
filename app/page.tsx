@@ -89,8 +89,9 @@ export default function Home() {
           <p className="eyebrow">raytimz.com</p>
           <TypingHeadline />
           <p className="hero-text">
-            Based in Switzerland, with a soft spot for thoughtful technology,
-            Formula 1, and well-designed games.
+            Based in Switzerland, I&apos;m drawn to thoughtful software and elegant
+            product design—with plenty of room left for off-road adventures and
+            well-crafted games.
           </p>
         </div>
 

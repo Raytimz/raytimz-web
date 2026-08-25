@@ -354,7 +354,7 @@ footer {
 @media (max-width: 640px) {
   .shell { width: min(100% - 32px, 1120px); }
   .hero { gap: 44px; padding-block: 60px 68px; }
-  h1 { min-height: 208px; font-size: clamp(50px, 14vw, 68px); }
+  h1 { min-height: 0; margin-bottom: 20px; font-size: clamp(50px, 14vw, 68px); }
   .typed-line { font-size: .5em; }
   .education-card { margin-inline: -4px; }
   .education-body { padding-inline: 22px; }
