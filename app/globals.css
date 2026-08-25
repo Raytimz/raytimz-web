@@ -107,17 +107,20 @@ main {
   display: grid;
   flex: 1;
   grid-template-columns: 1.06fr .94fr;
+  grid-template-areas:
+    "intro education"
+    "social education";
   align-items: center;
-  gap: clamp(52px, 7vw, 100px);
+  column-gap: clamp(52px, 7vw, 100px);
+  row-gap: 36px;
   padding-block: clamp(72px, 10vh, 120px);
 }
 
-.hero-copy { max-width: 650px; }
-.hero-copy > * { animation: rise-in .72s both; }
-.hero-copy > :nth-child(1) { animation-delay: .08s; }
-.hero-copy > :nth-child(2) { animation-delay: .16s; }
-.hero-copy > :nth-child(3) { animation-delay: .24s; }
-.hero-copy > :nth-child(4) { animation-delay: .32s; }
+.hero-intro { grid-area: intro; align-self: end; max-width: 650px; }
+.hero-intro > * { animation: rise-in .72s both; }
+.hero-intro > :nth-child(1) { animation-delay: .08s; }
+.hero-intro > :nth-child(2) { animation-delay: .16s; }
+.hero-intro > :nth-child(3) { animation-delay: .24s; }
 
 .eyebrow {
   margin-bottom: 24px;
@@ -175,29 +178,41 @@ h1 {
   line-height: 1.72;
 }
 
+.social-section {
+  grid-area: social;
+  align-self: start;
+  max-width: 650px;
+  animation: rise-in .72s .32s both;
+}
+
+.social-title {
+  margin-bottom: 12px;
+  color: #81798d;
+  font: 600 11px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .04em;
+}
+
 .social-links {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 36px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  gap: 10px;
 }
 
 .social-link {
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr);
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   width: 100%;
   min-width: 0;
-  padding: 15px 18px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid rgba(229, 220, 255, .13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .035);
   color: var(--ink);
   text-decoration: none;
-  transition: color 180ms ease, transform 180ms ease;
-}
-
-.social-link + .social-link {
-  border-left: 1px solid var(--line);
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .social-link > svg {
@@ -217,10 +232,16 @@ h1 {
   white-space: nowrap;
 }
 
-.social-link:hover { color: var(--accent); transform: translateY(-2px); }
+.social-link:hover {
+  border-color: rgba(185, 156, 255, .38);
+  background: rgba(185, 156, 255, .08);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
 .social-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 
 .education-card {
+  grid-area: education;
   --tilt-x: 0deg;
   --tilt-y: -2deg;
   overflow: hidden;
@@ -317,25 +338,30 @@ footer {
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
-    gap: 64px;
+    grid-template-areas:
+      "intro"
+      "education"
+      "social";
+    gap: 52px;
     padding-block: 78px 88px;
   }
 
-  .education-card { max-width: 610px; transform: none; }
+  .education-card,
+  .social-section { width: 100%; max-width: 610px; }
+  .education-card { transform: none; }
 }
 
 @media (max-width: 640px) {
   .shell { width: min(100% - 32px, 1120px); }
-  .hero { gap: 52px; padding-block: 60px 68px; }
+  .hero { gap: 44px; padding-block: 60px 68px; }
   h1 { min-height: 208px; font-size: clamp(50px, 14vw, 68px); }
   .typed-line { font-size: .5em; }
   .education-card { margin-inline: -4px; }
   .education-body { padding-inline: 22px; }
-  .social-links { grid-template-columns: 1fr; }
-  .social-link + .social-link {
-    border-top: 1px solid var(--line);
-    border-left: 0;
-  }
+  .social-links { gap: 8px; }
+  .social-link { gap: 8px; min-height: 44px; padding-inline: 10px; }
+  .social-link > svg { width: 18px; height: 18px; }
+  .social-link span { font-size: 12px; }
   .degree { grid-template-columns: 24px 1fr; }
   .degree-state { grid-column: 2; width: fit-content; }
   footer { min-height: 68px; }

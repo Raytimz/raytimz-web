@@ -85,29 +85,13 @@ export default function Home() {
       </div>
 
       <section className="hero shell">
-        <div className="hero-copy">
+        <div className="hero-intro">
           <p className="eyebrow">raytimz.com</p>
           <TypingHeadline />
           <p className="hero-text">
             Based in Switzerland, with a soft spot for thoughtful technology,
             Formula 1, and well-designed games.
           </p>
-          <div className="social-links" aria-label="Social profiles">
-            {socialLinks.map(({ platform, href, viewBox, path }) => (
-              <a
-                className="social-link"
-                href={href}
-                key={platform}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <svg aria-hidden="true" viewBox={viewBox}>
-                  <path d={path} />
-                </svg>
-                <span>{platform}</span>
-              </a>
-            ))}
-          </div>
         </div>
 
         <div
@@ -137,6 +121,26 @@ export default function Home() {
               </div>
               <span className="degree-state">Ongoing</span>
             </article>
+          </div>
+        </div>
+
+        <div className="social-section">
+          <p className="social-title" id="social-title">Find me:</p>
+          <div className="social-links" aria-labelledby="social-title">
+            {socialLinks.map(({ platform, href, viewBox, path }) => (
+              <a
+                className="social-link"
+                href={href}
+                key={platform}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <svg aria-hidden="true" viewBox={viewBox}>
+                  <path d={path} />
+                </svg>
+                <span>{platform}</span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
