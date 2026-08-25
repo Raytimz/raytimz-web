@@ -188,16 +188,15 @@ h1 {
   grid-template-columns: 22px minmax(0, 1fr);
   align-items: center;
   gap: 12px;
+  width: 100%;
   min-width: 0;
-  padding-block: 15px;
+  padding: 15px 18px;
   color: var(--ink);
   text-decoration: none;
   transition: color 180ms ease, transform 180ms ease;
 }
 
 .social-link + .social-link {
-  margin-left: 18px;
-  padding-left: 18px;
   border-left: 1px solid var(--line);
 }
 
@@ -205,23 +204,11 @@ h1 {
   width: 20px;
   height: 20px;
   color: #fff;
+  fill: currentColor;
 }
 
-.social-link > span {
-  display: flex;
+.social-link span {
   min-width: 0;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.social-link small {
-  color: #77707f;
-  font: 500 9px/1 ui-monospace, monospace;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.social-link strong {
   overflow: hidden;
   font-size: 13px;
   font-weight: 610;
@@ -346,8 +333,6 @@ footer {
   .education-body { padding-inline: 22px; }
   .social-links { grid-template-columns: 1fr; }
   .social-link + .social-link {
-    margin-left: 0;
-    padding-left: 0;
     border-top: 1px solid var(--line);
     border-left: 0;
   }
