@@ -53,16 +53,23 @@ function newestHeartbeat(heartbeats: KumaHeartbeat[] | undefined) {
   if (!heartbeats?.length) return undefined;
 
   return [...heartbeats].sort((left, right) => {
-    const leftTime = Date.parse(left.time ?? '');
-    const rightTime = Date.parse(right.time ?? '');
+    const leftTime = parseTimestamp(left.time);
+    const rightTime = parseTimestamp(right.time);
     return (Number.isNaN(rightTime) ? 0 : rightTime)
       - (Number.isNaN(leftTime) ? 0 : leftTime);
   })[0];
 }
 
+function parseTimestamp(value: string | undefined) {
+  if (!value) return Number.NaN;
+
+  const normalized = value.replace(' ', 'T');
+  const hasExplicitTimezone = /(?:z|[+-]\d{2}:?\d{2})$/i.test(normalized);
+  return Date.parse(hasExplicitTimezone ? normalized : `${normalized}Z`);
+}
+
 function safeTimestamp(value: string | undefined): string | null {
-  if (!value) return null;
-  const timestamp = Date.parse(value);
+  const timestamp = parseTimestamp(value);
   return Number.isNaN(timestamp) ? null : new Date(timestamp).toISOString();
 }
 
