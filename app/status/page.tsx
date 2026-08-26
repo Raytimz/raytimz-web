@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-html-link-for-pages -- Vinext currently intercepts Next links here without navigating. */
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { publicServiceGroups, type PublicServiceStatus } from './services';
 import { getPublicStatusSnapshot } from './status-data';
 import styles from './status.module.css';
@@ -76,10 +76,6 @@ export default async function StatusPage() {
 
   return (
     <main className={styles.page}>
-      <a className={styles.skipLink} href="#service-statuses">
-        Skip to service statuses
-      </a>
-
       <div className={styles.ambient} aria-hidden="true">
         <span className={styles.orbit} />
         <span className={styles.glow} />
@@ -87,9 +83,9 @@ export default async function StatusPage() {
 
       <div className={styles.content}>
         <nav className={styles.topbar} aria-label="Status page navigation">
-          <Link className={styles.brand} href="/">
+          <a className={styles.brand} href="/">
             raytimz.com
-          </Link>
+          </a>
           <span className={styles.pageLabel}>
             <span aria-hidden="true" />
             Public status
@@ -140,7 +136,7 @@ export default async function StatusPage() {
           </dl>
         </section>
 
-        <div className={styles.groups} id="service-statuses" tabIndex={-1}>
+        <div className={styles.groups}>
           {publicServiceGroups.map((group) => {
             const services = snapshot.services.filter((service) => service.group === group);
 
@@ -195,19 +191,12 @@ export default async function StatusPage() {
         </div>
 
         <footer className={styles.footer}>
-          <div>
-            <p className={styles.footerTitle}>Public by design</p>
-            <p className={styles.footerText}>
-              Only published availability is shown here. No internal addresses,
-              logs, or administrative details are exposed.
-            </p>
-          </div>
           <div className={styles.footerActions}>
-            <Link className={styles.homeLink} href="/">Home</Link>
-            <Link className={styles.refreshLink} href="/status?refresh=1" prefetch={false}>
+            <a className={styles.homeLink} href="/">Home</a>
+            <a className={styles.refreshLink} href="/status?refresh=1">
               Refresh data
               <span aria-hidden="true">↻</span>
-            </Link>
+            </a>
           </div>
         </footer>
       </div>

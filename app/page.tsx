@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import type { PointerEvent } from 'react';
-import Link from 'next/link';
 
 const socialLinks = [
   {
@@ -148,7 +147,7 @@ export default function Home() {
       </section>
 
       <footer className="shell">
-        <Link href="/status">System status</Link>
+        <a href="/status">System status</a>
         <span>© {new Date().getFullYear()} Dmitry</span>
       </footer>
     </main>
