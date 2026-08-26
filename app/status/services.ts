@@ -38,6 +38,7 @@ export const serviceRegistry: readonly ServiceDefinition[] = [
     name: 'StateBot',
     description: 'Discord automation and community workflows.',
     group: 'Bots',
+    monitorName: 'StateBot',
   },
   {
     id: 'hobbshelper',
