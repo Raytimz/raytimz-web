@@ -85,17 +85,8 @@
 .pageLabel {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
   color: #8d8598;
   font-size: 12px;
-}
-
-.pageLabel > span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #80d8b1;
-  box-shadow: 0 0 11px rgba(128, 216, 177, .48);
 }
 
 .header {
@@ -496,5 +487,4 @@
   .serviceIcon,
   .refreshLink { border: 1px solid CanvasText; }
 
-  .pageLabel > span { background: CanvasText; box-shadow: none; }
 }

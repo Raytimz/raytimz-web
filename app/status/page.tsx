@@ -87,7 +87,6 @@ export default async function StatusPage() {
             raytimz.com
           </a>
           <span className={styles.pageLabel}>
-            <span aria-hidden="true" />
             Public status
           </span>
         </nav>
