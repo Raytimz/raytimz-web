@@ -95,11 +95,16 @@ export default async function StatusPage() {
         <header className={styles.header}>
           <p className={styles.eyebrow}>Live systems</p>
           <h1 className={styles.title}>System status</h1>
-          <p className={styles.intro}>
-            A clear, public view of service availability. Infrastructure,
-            logs, and administrative controls stay private.
-          </p>
+          <p className={styles.intro}>A clear, public view of service availability.</p>
         </header>
+
+        <div className={styles.statusActions} aria-label="Status page actions">
+          <a className={styles.homeLink} href="/">Home</a>
+          <a className={styles.refreshLink} href="/status?refresh=1">
+            Refresh data
+            <span aria-hidden="true">↻</span>
+          </a>
+        </div>
 
         <section
           className={styles.summary}
@@ -190,15 +195,6 @@ export default async function StatusPage() {
           })}
         </div>
 
-        <footer className={styles.footer}>
-          <div className={styles.footerActions}>
-            <a className={styles.homeLink} href="/">Home</a>
-            <a className={styles.refreshLink} href="/status?refresh=1">
-              Refresh data
-              <span aria-hidden="true">↻</span>
-            </a>
-          </div>
-        </footer>
       </div>
     </main>
   );
