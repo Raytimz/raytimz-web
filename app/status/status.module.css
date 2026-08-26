@@ -23,6 +23,7 @@
   background: rgba(108, 67, 188, .12);
   filter: blur(90px);
   content: '';
+  animation: ambient-drift 18s ease-in-out infinite alternate;
 }
 
 .orbit {
@@ -33,6 +34,7 @@
   height: 34rem;
   border: 1px solid rgba(185, 156, 255, .07);
   border-radius: 50%;
+  animation: orbit-spin 32s linear infinite;
 }
 
 .orbit::after {
@@ -45,6 +47,7 @@
   background: var(--accent);
   box-shadow: 0 0 24px rgba(185, 156, 255, .75);
   content: '';
+  animation: orbit-pulse 4s ease-in-out infinite;
 }
 
 .glow {
@@ -56,6 +59,7 @@
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 30px 10px rgba(139, 92, 246, .28);
+  animation: glow-float 14s ease-in-out infinite alternate;
 }
 
 .content {
@@ -97,6 +101,7 @@
 .header {
   max-width: 720px;
   padding: clamp(72px, 10vw, 108px) 0 46px;
+  animation: status-rise .72s .06s both;
 }
 
 .eyebrow {
@@ -131,6 +136,7 @@
   border-radius: 22px;
   background: linear-gradient(145deg, rgba(25, 18, 42, .9), rgba(11, 9, 18, .82));
   box-shadow: 0 26px 80px rgba(0, 0, 0, .3), 0 0 70px rgba(109, 40, 217, .05);
+  animation: status-rise .8s .2s both;
 }
 
 .summaryLead {
@@ -350,6 +356,31 @@
   justify-content: flex-end;
   gap: 10px;
   margin-bottom: 18px;
+  animation: status-rise .72s .14s both;
+}
+
+.groups { animation: status-rise .8s .28s both; }
+
+@keyframes ambient-drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(.96); opacity: .72; }
+  to { transform: translate3d(5%, 3%, 0) scale(1.06); opacity: 1; }
+}
+
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-pulse {
+  50% { transform: scale(1.4); opacity: .6; }
+}
+
+@keyframes glow-float {
+  to { transform: translate3d(28px, -24px, 0); opacity: .68; }
+}
+
+@keyframes status-rise {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .homeLink,
@@ -444,6 +475,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ambient::before,
+  .orbit,
+  .orbit::after,
+  .glow,
+  .header,
+  .statusActions,
+  .summary,
+  .groups { animation: none; }
+
   .service,
   .homeLink,
   .refreshLink { transition: none; }
