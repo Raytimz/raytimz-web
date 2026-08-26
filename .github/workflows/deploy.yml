@@ -116,5 +116,4 @@ jobs:
       - name: Verify public routes
         run: |
           curl --fail --silent --show-error --retry 5 --retry-delay 2 https://raytimz.com/ > /dev/null
-          curl --fail --silent --show-error --retry 5 --retry-delay 2 https://raytimz.com/ru > /dev/null
           curl --fail --silent --show-error --retry 5 --retry-delay 2 https://www.raytimz.com/ > /dev/null

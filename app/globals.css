@@ -122,17 +122,6 @@ main {
 .hero-intro > :nth-child(2) { animation-delay: .16s; }
 .hero-intro > :nth-child(3) { animation-delay: .24s; }
 
-.intro-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  max-width: 590px;
-  margin-bottom: 24px;
-}
-
-.intro-meta .eyebrow { margin-bottom: 0; }
-
 .eyebrow {
   margin-bottom: 24px;
   color: var(--accent);
@@ -140,30 +129,6 @@ main {
   letter-spacing: .15em;
   text-transform: uppercase;
 }
-
-.language-switcher {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 6px 9px;
-  border: 1px solid rgba(229, 220, 255, .12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .025);
-  font: 600 10px/1 ui-monospace, SFMono-Regular, Consolas, monospace;
-  letter-spacing: .06em;
-}
-
-.language-switcher a,
-.language-switcher span {
-  color: #77707f;
-  text-decoration: none;
-  transition: color 180ms ease;
-}
-
-.language-switcher span[aria-current="page"] { color: var(--accent); }
-.language-switcher a:hover { color: var(--ink); }
-.language-switcher a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.language-switcher i { color: #494450; font-style: normal; }
 
 h1 {
   min-height: 220px;
