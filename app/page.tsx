@@ -86,7 +86,7 @@ export default function Home() {
 
       <section className="hero shell">
         <div className="hero-intro">
-          <p className="eyebrow">Who am I?</p>
+          <p className="eyebrow">About me</p>
           <TypingHeadline />
           <p className="hero-text">
             Based in Switzerland, I&apos;m drawn to thoughtful software and elegant
