@@ -339,6 +339,23 @@ footer a {
 footer a:hover { color: var(--accent); }
 footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 
+.footer-nav,
+.language-switcher {
+  display: flex;
+  align-items: center;
+}
+
+.footer-nav { gap: 20px; }
+
+.language-switcher {
+  gap: 7px;
+  font: 600 10px/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .07em;
+}
+
+.language-switcher span[aria-current='page'] { color: var(--accent); }
+.language-switcher i { color: #494450; font-style: normal; }
+
 @keyframes drift { to { transform: translate3d(22px, -18px, 0); opacity: .85; } }
 @keyframes orbit-spin { to { transform: rotate(360deg); } }
 @keyframes cursor-blink { 50% { opacity: 0; } }
@@ -375,6 +392,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; 
   .degree { grid-template-columns: 24px 1fr; }
   .degree-state { grid-column: 2; width: fit-content; }
   footer { min-height: 68px; }
+  .footer-nav { gap: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
