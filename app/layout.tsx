@@ -16,13 +16,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     alternateLocale: ['ru_RU'],
-    images: [{ url: '/og.png', width: 1730, height: 909, alt: 'Hi, I’m Dmitry. Software engineer based in Switzerland.' }],
+    images: [{ url: '/og-v2.png', width: 1730, height: 909, alt: 'Dmitry — Software engineer · Switzerland' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Dmitry — Software Engineer in Switzerland',
     description: 'Software engineer and EPFL Data Science master’s student based in Switzerland.',
-    images: ['/og.png'],
+    images: ['/og-v2.png'],
   },
 };
 

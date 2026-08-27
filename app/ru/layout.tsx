@@ -15,17 +15,17 @@ export const metadata: Metadata = {
     locale: 'ru_RU',
     alternateLocale: ['en_US'],
     images: [{
-      url: '/og.png',
+      url: '/og-v2.png',
       width: 1730,
       height: 909,
-      alt: 'Hi, I’m Dmitry. Software engineer based in Switzerland.',
+      alt: 'Dmitry — Software engineer · Switzerland',
     }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Дмитрий — Software engineer в Швейцарии',
     description: 'Продуманный софт, продуктовый дизайн и Data Science в EPFL.',
-    images: ['/og.png'],
+    images: ['/og-v2.png'],
   },
 };
 
