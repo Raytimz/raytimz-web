@@ -1,30 +1,30 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Дмитрий — Software Engineer в Швейцарии',
+  title: 'Дмитрий — Software engineer в Швейцарии',
   description:
-    'Личный сайт Дмитрия — software engineer и магистранта EPFL по направлению Data Science в Швейцарии.',
+    'Личный сайт Дмитрия: продуманный софт, продуктовый дизайн и Data Science в EPFL.',
   alternates: {
     canonical: '/ru',
     languages: { en: '/', ru: '/ru' },
   },
   openGraph: {
-    title: 'Дмитрий — Software Engineer в Швейцарии',
-    description: 'Software engineer и магистрант EPFL по направлению Data Science в Швейцарии.',
+    title: 'Дмитрий — Software engineer в Швейцарии',
+    description: 'Продуманный софт, продуктовый дизайн и Data Science в EPFL.',
     type: 'website',
     locale: 'ru_RU',
     alternateLocale: ['en_US'],
     images: [{
       url: '/og.png',
-      width: 1536,
-      height: 1024,
-      alt: 'Привет, я Дмитрий. Software engineer в Швейцарии.',
+      width: 1730,
+      height: 909,
+      alt: 'Hi, I’m Dmitry. Software engineer based in Switzerland.',
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Дмитрий — Software Engineer в Швейцарии',
-    description: 'Software engineer и магистрант EPFL по направлению Data Science в Швейцарии.',
+    title: 'Дмитрий — Software engineer в Швейцарии',
+    description: 'Продуманный софт, продуктовый дизайн и Data Science в EPFL.',
     images: ['/og.png'],
   },
 };

@@ -356,6 +356,62 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; 
 .language-switcher span[aria-current='page'] { color: var(--accent); }
 .language-switcher i { color: #494450; font-style: normal; }
 
+.not-found-page { justify-content: center; }
+
+.not-found-content {
+  padding-block: 80px;
+  animation: rise-in .72s both;
+}
+
+.not-found-content .eyebrow { margin-bottom: 26px; }
+
+.not-found-code {
+  margin-bottom: 6px;
+  color: rgba(185, 156, 255, .18);
+  font: 600 clamp(82px, 13vw, 154px)/.78 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: -.09em;
+}
+
+.not-found-content h1 {
+  min-height: 0;
+  max-width: 780px;
+  margin-bottom: 22px;
+  font-size: clamp(50px, 7vw, 78px);
+}
+
+.not-found-text {
+  max-width: 590px;
+  margin-bottom: 30px;
+  color: var(--muted);
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.7;
+}
+
+.not-found-link {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border: 1px solid rgba(229, 220, 255, .13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .035);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 610;
+  text-decoration: none;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.not-found-link:hover {
+  border-color: rgba(185, 156, 255, .34);
+  background: rgba(185, 156, 255, .07);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.not-found-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+
 @keyframes drift { to { transform: translate3d(22px, -18px, 0); opacity: .85; } }
 @keyframes orbit-spin { to { transform: rotate(360deg); } }
 @keyframes cursor-blink { 50% { opacity: 0; } }
@@ -393,6 +449,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; 
   .degree-state { grid-column: 2; width: fit-content; }
   footer { min-height: 68px; }
   .footer-nav { gap: 14px; }
+  .not-found-content { padding-block: 60px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
