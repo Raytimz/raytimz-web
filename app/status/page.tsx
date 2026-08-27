@@ -88,14 +88,6 @@ export default async function StatusPage() {
           <p className={styles.intro}>A clear, public view of service availability.</p>
         </header>
 
-        <div className={styles.statusActions} aria-label="Status page actions">
-          <a className={styles.homeLink} href="/">Home</a>
-          <a className={styles.refreshLink} href="/status?refresh=1">
-            Refresh data
-            <span aria-hidden="true">↻</span>
-          </a>
-        </div>
-
         <section
           className={styles.summary}
           data-status={snapshot.overallStatus}
@@ -185,6 +177,10 @@ export default async function StatusPage() {
           })}
         </div>
 
+        <footer className={styles.footer}>
+          <a href="/">About me</a>
+          <span>© {new Date().getFullYear()} Dmitry</span>
+        </footer>
       </div>
     </main>
   );
