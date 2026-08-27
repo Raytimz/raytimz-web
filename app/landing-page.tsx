@@ -29,10 +29,14 @@ const socialLinks = [
 function TypingHeadline({ copy }: { copy: LandingCopy['headline'] }) {
   const sentence = copy.profession;
   const [typed, setTyped] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const reducedMotionTimer = window.setTimeout(() => setTyped(sentence), 0);
+      const reducedMotionTimer = window.setTimeout(() => {
+        setTyped(sentence);
+        setIsComplete(true);
+      }, 0);
       return () => window.clearTimeout(reducedMotionTimer);
     }
 
@@ -40,7 +44,10 @@ function TypingHeadline({ copy }: { copy: LandingCopy['headline'] }) {
     const timer = window.setInterval(() => {
       character += 1;
       setTyped(sentence.slice(0, character));
-      if (character === sentence.length) window.clearInterval(timer);
+      if (character === sentence.length) {
+        setIsComplete(true);
+        window.clearInterval(timer);
+      }
     }, 58);
 
     return () => window.clearInterval(timer);
@@ -51,7 +58,7 @@ function TypingHeadline({ copy }: { copy: LandingCopy['headline'] }) {
       <span className="hello-line">{copy.greeting}</span>
       {copy.name}
       <span className="typed-line" aria-hidden="true">
-        {typed}<i className="typing-cursor" />
+        {typed}<i className={`typing-cursor${isComplete ? ' is-complete' : ''}`} />
       </span>
     </h1>
   );

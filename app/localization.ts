@@ -83,7 +83,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
       masterStatus: 'Сейчас',
     },
     socialTitle: 'Найди меня:',
-    statusLink: 'Статус сервисов',
+    statusLink: 'Статус систем',
     statusHref: '/ru/status',
     footerName: 'Дмитрий',
   },
@@ -160,7 +160,7 @@ export const statusCopy: Record<Locale, StatusCopy> = {
     locale: 'ru',
     languageLabel: 'Язык',
     eyebrow: 'Сервисы',
-    title: 'Статус сервисов',
+    title: 'Статус систем',
     intro: 'Актуальное состояние — коротко и без лишних деталей.',
     summary: {
       operational: {

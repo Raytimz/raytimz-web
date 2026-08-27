@@ -2,6 +2,7 @@ import LanguageSwitcher from '../language-switcher';
 import { statusCopy, type Locale, type StatusCopy } from '../localization';
 import { publicServiceGroups, type PublicServiceStatus } from './services';
 import { getPublicStatusSnapshot } from './status-data';
+import StatusAutoRefresh from './status-auto-refresh';
 import styles from './status.module.css';
 
 const statusGlyphs: Record<PublicServiceStatus, string> = {
@@ -41,6 +42,7 @@ export default async function StatusPage({ locale }: { locale: Locale }) {
 
   return (
     <main className={styles.page} lang={locale}>
+      <StatusAutoRefresh />
       <div className={styles.ambient} aria-hidden="true">
         <span className={styles.orbit} />
         <span className={styles.glow} />
