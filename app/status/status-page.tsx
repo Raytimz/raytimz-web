@@ -133,13 +133,9 @@ export default async function StatusPage({ locale }: { locale: Locale }) {
                           <span className={styles.statusBadge} data-status={service.status}>
                             {copy.statusLabels[service.status]}
                           </span>
-                          {service.checkedAt ? (
-                            <time className={styles.checkedAt} dateTime={service.checkedAt}>
-                              {formatCheckedAt(service.checkedAt, copy)}
-                            </time>
-                          ) : (
+                          {service.history.length === 0 ? (
                             <span className={styles.checkedAt}>{copy.awaitingCheck}</span>
-                          )}
+                          ) : null}
                         </div>
 
                         {service.history.length > 0 ? (
