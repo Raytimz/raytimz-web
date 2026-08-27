@@ -65,7 +65,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
     eyebrow: 'Обо мне',
     headline: {
       ariaLabel: 'Привет, меня зовут Дмитрий, software engineer.',
-      greeting: 'привет, меня зовут',
+      greeting: 'Привет, меня зовут',
       name: 'Дмитрий',
       profession: 'Software engineer.',
     },
@@ -82,7 +82,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
       masterSubject: 'Data Science',
       masterStatus: 'Сейчас',
     },
-    socialTitle: 'найди меня:',
+    socialTitle: 'Найди меня:',
     statusLink: 'Статус сервисов',
     statusHref: '/ru/status',
     footerName: 'Дмитрий',
