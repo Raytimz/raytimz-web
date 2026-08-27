@@ -6,6 +6,11 @@ export type PublicServiceStatus =
 
 export type PublicServiceGroup = 'Web' | 'Bots' | 'Services';
 
+export type PublicServiceHistoryPoint = {
+  status: PublicServiceStatus;
+  checkedAt: string;
+};
+
 export type PublicService = {
   id: string;
   name: string;
@@ -13,6 +18,7 @@ export type PublicService = {
   group: PublicServiceGroup;
   status: PublicServiceStatus;
   checkedAt: string | null;
+  history: PublicServiceHistoryPoint[];
 };
 
 export type PublicStatusSnapshot = {
@@ -21,7 +27,7 @@ export type PublicStatusSnapshot = {
   services: PublicService[];
 };
 
-type ServiceDefinition = Omit<PublicService, 'status' | 'checkedAt'> & {
+type ServiceDefinition = Omit<PublicService, 'status' | 'checkedAt' | 'history'> & {
   monitorName?: string;
 };
 

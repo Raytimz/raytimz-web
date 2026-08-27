@@ -104,6 +104,8 @@ export type StatusCopy = {
   serviceDescriptions: Record<string, string>;
   checkedPrefix: string;
   awaitingCheck: string;
+  historyLabel: string;
+  historyChecks: (count: number) => string;
   serviceCount: (count: number) => string;
   homeLink: string;
   homeHref: string;
@@ -151,6 +153,8 @@ export const statusCopy: Record<Locale, StatusCopy> = {
     },
     checkedPrefix: 'Checked',
     awaitingCheck: 'Awaiting first check',
+    historyLabel: 'Recent uptime',
+    historyChecks: (count) => `${count} recent ${count === 1 ? 'check' : 'checks'}`,
     serviceCount: (count) => `${count} ${count === 1 ? 'service' : 'services'}`,
     homeLink: 'About me',
     homeHref: '/',
@@ -196,6 +200,17 @@ export const statusCopy: Record<Locale, StatusCopy> = {
     },
     checkedPrefix: 'Проверено',
     awaitingCheck: 'Проверки ещё не было',
+    historyLabel: 'Недавняя доступность',
+    historyChecks: (count) => {
+      const mod10 = count % 10;
+      const mod100 = count % 100;
+      const noun = mod10 === 1 && mod100 !== 11
+        ? 'проверка'
+        : mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)
+          ? 'проверки'
+          : 'проверок';
+      return `${count} ${noun}`;
+    },
     serviceCount: (count) => {
       const mod10 = count % 10;
       const mod100 = count % 100;

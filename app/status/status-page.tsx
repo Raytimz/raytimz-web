@@ -141,6 +141,33 @@ export default async function StatusPage({ locale }: { locale: Locale }) {
                             <span className={styles.checkedAt}>{copy.awaitingCheck}</span>
                           )}
                         </div>
+
+                        {service.history.length > 0 ? (
+                          <div className={styles.history}>
+                            <div className={styles.historyHeader}>
+                              <span>{copy.historyLabel}</span>
+                              <span>{copy.historyChecks(service.history.length)}</span>
+                            </div>
+                            <div className={styles.historyBars} aria-hidden="true">
+                              {service.history.map((check, index) => (
+                                <span
+                                  className={styles.historySegment}
+                                  data-status={check.status}
+                                  key={`${check.checkedAt}-${index}`}
+                                  title={`${copy.statusLabels[check.status]} · ${formatCheckedAt(check.checkedAt, copy)}`}
+                                />
+                              ))}
+                            </div>
+                            <div className={styles.historyRange}>
+                              <time dateTime={service.history[0].checkedAt}>
+                                {formatUpdatedAt(service.history[0].checkedAt, locale)}
+                              </time>
+                              <time dateTime={service.history.at(-1)?.checkedAt}>
+                                {formatUpdatedAt(service.history.at(-1)?.checkedAt ?? snapshot.generatedAt, locale)}
+                              </time>
+                            </div>
+                          </div>
+                        ) : null}
                       </article>
                     </li>
                   ))}

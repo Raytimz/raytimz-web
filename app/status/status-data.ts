@@ -1,6 +1,7 @@
 import {
   serviceRegistry,
   type PublicService,
+  type PublicServiceHistoryPoint,
   type PublicServiceStatus,
   type PublicStatusSnapshot,
 } from './services';
@@ -38,6 +39,7 @@ function unknownSnapshot(): PublicStatusSnapshot {
       group,
       status: 'unknown',
       checkedAt: null,
+      history: [],
     })),
   };
 }
@@ -49,23 +51,23 @@ function toPublicStatus(status: number | undefined): PublicServiceStatus {
   return 'unknown';
 }
 
-function newestHeartbeat(heartbeats: KumaHeartbeat[] | undefined) {
-  if (!heartbeats?.length) return undefined;
-
-  return [...heartbeats].sort((left, right) => {
-    const leftTime = parseTimestamp(left.time);
-    const rightTime = parseTimestamp(right.time);
-    return (Number.isNaN(rightTime) ? 0 : rightTime)
-      - (Number.isNaN(leftTime) ? 0 : leftTime);
-  })[0];
-}
-
 function parseTimestamp(value: string | undefined) {
   if (!value) return Number.NaN;
 
   const normalized = value.replace(' ', 'T');
   const hasExplicitTimezone = /(?:z|[+-]\d{2}:?\d{2})$/i.test(normalized);
   return Date.parse(hasExplicitTimezone ? normalized : `${normalized}Z`);
+}
+
+function publicHistory(heartbeats: KumaHeartbeat[] | undefined): PublicServiceHistoryPoint[] {
+  return (heartbeats ?? [])
+    .map((heartbeat) => ({
+      status: toPublicStatus(heartbeat.status),
+      checkedAt: safeTimestamp(heartbeat.time),
+    }))
+    .filter((heartbeat): heartbeat is PublicServiceHistoryPoint => heartbeat.checkedAt !== null)
+    .sort((left, right) => Date.parse(left.checkedAt) - Date.parse(right.checkedAt))
+    .slice(-60);
 }
 
 function safeTimestamp(value: string | undefined): string | null {
@@ -113,14 +115,16 @@ export async function getPublicStatusSnapshot(): Promise<PublicStatusSnapshot> {
       const monitor = monitorName
         ? monitors.find(({ name }) => name === monitorName)
         : undefined;
-      const heartbeat = monitor?.id === undefined
-        ? undefined
-        : newestHeartbeat(heartbeatPage.heartbeatList?.[String(monitor.id)]);
+      const history = monitor?.id === undefined
+        ? []
+        : publicHistory(heartbeatPage.heartbeatList?.[String(monitor.id)]);
+      const latestCheck = history.at(-1);
 
       return {
         ...service,
-        status: toPublicStatus(heartbeat?.status),
-        checkedAt: safeTimestamp(heartbeat?.time),
+        status: latestCheck?.status ?? 'unknown',
+        checkedAt: latestCheck?.checkedAt ?? null,
+        history,
       };
     });
 
