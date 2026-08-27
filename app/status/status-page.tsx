@@ -1,5 +1,6 @@
 import LanguageSwitcher from '../language-switcher';
 import { statusCopy, type Locale, type StatusCopy } from '../localization';
+import { projectHref, type ProjectId } from '../projects/projects';
 import { publicServiceGroups, type PublicServiceStatus } from './services';
 import { getPublicStatusSnapshot } from './status-data';
 import StatusAutoRefresh from './status-auto-refresh';
@@ -10,6 +11,12 @@ const statusGlyphs: Record<PublicServiceStatus, string> = {
   degraded: '!',
   offline: '×',
   unknown: '–',
+};
+
+const projectIdsByService: Partial<Record<string, ProjectId>> = {
+  statebot: 'statebot',
+  hobbshelper: 'hobbshelper',
+  'majestic-forms': 'majesticforms',
 };
 
 function formatCheckedAt(value: string, copy: StatusCopy) {
@@ -106,12 +113,15 @@ export default async function StatusPage({ locale }: { locale: Locale }) {
                 </div>
 
                 <ul className={styles.serviceList}>
-                  {services.map((service) => (
-                    <li className={styles.serviceItem} key={service.id}>
-                      <article
-                        className={styles.service}
-                        aria-labelledby={`service-${service.id}`}
-                      >
+                  {services.map((service) => {
+                    const projectId = projectIdsByService[service.id];
+
+                    return (
+                      <li className={styles.serviceItem} key={service.id}>
+                        <article
+                          className={styles.service}
+                          aria-labelledby={`service-${service.id}`}
+                        >
                         <span
                           className={styles.serviceIcon}
                           data-status={service.status}
@@ -122,7 +132,11 @@ export default async function StatusPage({ locale }: { locale: Locale }) {
 
                         <div className={styles.serviceCopy}>
                           <h3 className={styles.serviceName} id={`service-${service.id}`}>
-                            {service.name}
+                            {projectId ? (
+                              <a className={styles.serviceLink} href={projectHref(projectId, locale)}>
+                                {service.name}<span aria-hidden="true">↗</span>
+                              </a>
+                            ) : service.name}
                           </h3>
                           <p className={styles.serviceDescription}>
                             {copy.serviceDescriptions[service.id] ?? service.description}
@@ -164,9 +178,10 @@ export default async function StatusPage({ locale }: { locale: Locale }) {
                             </div>
                           </div>
                         ) : null}
-                      </article>
-                    </li>
-                  ))}
+                        </article>
+                      </li>
+                    );
+                  })}
                 </ul>
               </section>
             );
