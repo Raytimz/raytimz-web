@@ -82,15 +82,6 @@ export default async function StatusPage() {
       </div>
 
       <div className={styles.content}>
-        <nav className={styles.topbar} aria-label="Status page navigation">
-          <a className={styles.brand} href="/">
-            raytimz.com
-          </a>
-          <span className={styles.pageLabel}>
-            Public status
-          </span>
-        </nav>
-
         <header className={styles.header}>
           <p className={styles.eyebrow}>Live systems</p>
           <h1 className={styles.title}>System status</h1>
