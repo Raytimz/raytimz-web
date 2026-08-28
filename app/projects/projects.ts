@@ -8,9 +8,10 @@ type ProjectFeature = {
 };
 
 export type ProjectVisual = {
-  kind: 'image' | 'statebot-command' | 'statebot-logs' | 'majestic-form' | 'majestic-relay';
+  kind: 'image' | 'placeholder' | 'majestic-form' | 'majestic-relay';
   image?: string;
   alt?: string;
+  placeholderLabel?: string;
   title: string;
   caption: string;
 };
@@ -18,6 +19,7 @@ export type ProjectVisual = {
 type ProjectLocalizedContent = {
   category: string;
   tagline: string;
+  heroDescription?: string;
   overviewTitle: string;
   overview: string[];
   featuresTitle: string;
@@ -47,79 +49,85 @@ export const projects: Record<ProjectId, ProjectDefinition> = {
       src: '/projects/statebot/logo.png',
       alt: 'StateBot logo',
     },
-    stack: ['Node.js', 'discord.js', 'Docker', 'GitHub Actions', 'Uptime Kuma'],
+    stack: ['Node.js 22', 'discord.js 14', 'Docker', 'GitHub Actions'],
     content: {
       en: {
         category: 'Discord automation',
-        tagline: 'Discord operations, made deliberate.',
-        overviewTitle: 'Structure for the work behind a community.',
+        tagline: 'Factions, ranks, and appointments — one consistent system.',
+        heroDescription: 'A Discord bot that manages the Majestic RP community built around government factions. It enforces nickname conventions, roles, and leadership ranks, coordinates appointments, and gives administrators safeguards for large-scale actions.',
+        overviewTitle: 'Technical foundations for complex Discord workflows.',
         overview: [
-          'StateBot turns recurring Discord administration into clear workflows. Role changes, member onboarding, leadership requests and clean-up tasks move through explicit commands and confirmation steps instead of scattered manual actions.',
-          'The service is intentionally operational: it ships as an immutable container, reports readiness through a private health endpoint and produces structured events that make every important workflow easier to understand and maintain.',
+          'StateBot is built on Node.js 22 and discord.js 14. Its functionality is split into independent modules for slash commands, context commands, forms, buttons, and multi-step confirmation flows.',
+          'Running in Docker keeps local and server environments consistent, simplifies updates, and makes every version reproducible. GitHub Actions validates the code, builds an image, and deploys it to the production instance automatically.',
         ],
-        featuresTitle: 'Purpose-built, not generic.',
-        visualsTitle: 'Commands in, clear events out.',
+        featuresTitle: 'Administrative rules, encoded once.',
+        visualsTitle: 'Real workflows, captured in Discord.',
         features: [
           {
-            title: 'Role workflows',
-            description: 'Nickname, faction, leader, deputy and staff changes follow the same predictable rules.',
+            title: 'Factions and identity',
+            description: 'Nickname formats, faction roles, and rank changes are validated against the same domain rules.',
           },
           {
-            title: 'Requests with context',
-            description: 'Commands, modals and confirmation messages keep high-impact actions reviewable.',
+            title: 'Leadership appointments',
+            description: 'Leader and deputy requests collect context, enforce limits, and require explicit confirmation.',
           },
           {
-            title: 'Operational clarity',
-            description: 'Health checks, graceful shutdown and structured logs support safe automatic deployments.',
+            title: 'Safe bulk operations',
+            description: 'Roster clean-ups preview the selected faction, ranks, and affected members before execution.',
           },
         ],
         visuals: [
           {
-            kind: 'statebot-command',
-            title: 'Guided command flows',
-            caption: 'Administrative actions arrive with the context and confirmation they need.',
+            kind: 'placeholder',
+            placeholderLabel: 'Screenshot coming soon',
+            title: 'Leader appointment',
+            caption: 'The `/новый-лидер` form and its request with the candidate, faction, and confirmation action.',
           },
           {
-            kind: 'statebot-logs',
-            title: 'Readable operations',
-            caption: 'Structured events make deployment, readiness and interaction failures visible.',
+            kind: 'placeholder',
+            placeholderLabel: 'Screenshot coming soon',
+            title: 'Mass roster cleanup',
+            caption: 'A wipe request showing the selected faction, ranks, and affected member count before confirmation.',
           },
         ],
       },
       ru: {
         category: 'Discord-автоматизация',
-        tagline: 'Порядок в Discord — без ручной рутины.',
-        overviewTitle: 'Чёткая система для внутренней работы сообщества.',
+        tagline: 'Фракции, ранги и назначения — по единым правилам.',
+        heroDescription: 'Discord-бот для автоматизированного управления сообществом игроков государственных фракций Majestic RP. Контролирует никнеймы, роли и руководящие ранги, организует назначения и помогает безопасно проводить массовые административные операции.',
+        overviewTitle: 'Техническая основа сложных Discord-сценариев.',
         overview: [
-          'StateBot превращает повторяющиеся задачи администрации в понятные сценарии. Роли, ники, назначения лидеров и служебные запросы проходят через команды и подтверждения, а не теряются среди ручных действий.',
-          'Это прежде всего надёжный рабочий сервис: неизменяемые Docker-образы, приватная проверка готовности и структурированные события помогают обновлять бота спокойно и разбираться в его работе без догадок.',
+          'StateBot написан на Node.js 22 и discord.js 14. Функциональность разделена на независимые модули для slash-команд, контекстных команд, форм, кнопок и многоэтапных сценариев подтверждения.',
+          'Бот работает в Docker-контейнере, что обеспечивает одинаковое окружение при локальном запуске и на сервере, упрощает обновления и позволяет воспроизводимо разворачивать новые версии. GitHub Actions автоматически проверяет код, собирает образ и запускает обновление production-инстанса.',
         ],
-        featuresTitle: 'Не набор случайных команд.',
-        visualsTitle: 'Команда на входе — понятное событие на выходе.',
+        featuresTitle: 'Административные правила — в одном месте.',
+        visualsTitle: 'Реальные сценарии в интерфейсе Discord.',
         features: [
           {
-            title: 'Работа с ролями',
-            description: 'Ники, фракции, лидеры, заместители и старший состав подчиняются единым правилам.',
+            title: 'Фракции и профиль',
+            description: 'Формат никнейма, фракционные роли и ранги проверяются по единым правилам.',
           },
           {
-            title: 'Запросы с контекстом',
-            description: 'Команды, формы и подтверждения делают важные действия прозрачными.',
+            title: 'Назначения руководства',
+            description: 'Заявки на лидеров и заместителей собирают контекст, учитывают лимиты и требуют подтверждения.',
           },
           {
-            title: 'Понятная эксплуатация',
-            description: 'Health checks, graceful shutdown и структурированные логи упрощают обновления.',
+            title: 'Безопасные массовые операции',
+            description: 'Перед чисткой бот показывает выбранную фракцию, ранги и число затронутых участников.',
           },
         ],
         visuals: [
           {
-            kind: 'statebot-command',
-            title: 'Продуманные сценарии',
-            caption: 'Административные действия сразу получают нужный контекст и подтверждение.',
+            kind: 'placeholder',
+            placeholderLabel: 'Здесь появится скриншот',
+            title: 'Назначение лидера',
+            caption: 'Форма `/новый-лидер` и созданная заявка с кандидатом, фракцией и кнопкой подтверждения.',
           },
           {
-            kind: 'statebot-logs',
-            title: 'Прозрачная работа',
-            caption: 'Структурированные события показывают запуск, готовность и ошибки взаимодействий.',
+            kind: 'placeholder',
+            placeholderLabel: 'Здесь появится скриншот',
+            title: 'Массовая чистка состава',
+            caption: 'Запрос на вайп с выбранной фракцией, рангами и предварительным количеством участников.',
           },
         ],
       },

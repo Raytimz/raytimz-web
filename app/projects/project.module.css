@@ -85,6 +85,7 @@
 .heroCopy > :nth-child(2) { animation-delay: .1s; }
 .heroCopy > :nth-child(3) { animation-delay: .16s; }
 .heroCopy > :nth-child(4) { animation-delay: .22s; }
+.heroCopy > :nth-child(5) { animation-delay: .28s; }
 
 .backLink {
   display: inline-flex;
@@ -122,6 +123,14 @@
   font-size: clamp(19px, 2.6vw, 28px);
   line-height: 1.42;
   letter-spacing: -.025em;
+}
+
+.heroDescription {
+  max-width: 650px;
+  margin: 24px 0 0;
+  color: #91899d;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 .logoFrame {
@@ -458,57 +467,53 @@
 .mockupBar i { width: 6px; height: 6px; border-radius: 50%; background: #403946; }
 .mockupBar small { color: #6f6879; font: 550 8px/1 ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; }
 
-.commandCanvas {
+.screenshotPlaceholder {
   display: grid;
-  height: calc(100% - 42px);
-  grid-template-columns: 58px minmax(0, 1fr);
-  background: linear-gradient(135deg, rgba(88, 101, 242, .09), transparent 58%);
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  border-style: dashed;
+  background:
+    radial-gradient(circle at 50% 46%, color-mix(in srgb, var(--project-accent) 9%, transparent), transparent 34%),
+    rgba(255, 255, 255, .012);
 }
 
-.commandRail {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 11px;
-  padding-top: 20px;
-  border-right: 1px solid rgba(255, 255, 255, .06);
-  background: rgba(255, 255, 255, .018);
+.screenshotPlaceholder::after {
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(255, 255, 255, .035);
+  border-radius: 12px;
+  content: '';
 }
 
-.commandRail b,
-.commandRail i {
+.screenshotPlaceholder > p {
+  margin: 0;
+  color: #77707f;
+  font: 600 9px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.placeholderMark {
+  position: relative;
   display: grid;
-  width: 28px;
-  height: 28px;
+  width: 62px;
+  height: 50px;
   place-items: center;
-  border-radius: 10px;
-  background: #5865f2;
-  color: #fff;
-  font: 700 8px/1 ui-monospace, monospace;
+  border: 1px solid color-mix(in srgb, var(--project-accent) 30%, transparent);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--project-accent) 5%, transparent);
+  box-shadow: 0 0 36px color-mix(in srgb, var(--project-accent) 10%, transparent);
 }
 
-.commandRail i { height: 4px; border-radius: 999px; background: #39343f; }
+.placeholderMark i {
+  position: absolute;
+  width: 16px;
+  height: 1px;
+  background: color-mix(in srgb, var(--project-accent) 75%, #fff);
+}
 
-.commandPanel { align-self: center; margin: 22px; padding: 23px; border: 1px solid rgba(255,255,255,.08); border-radius: 15px; background: rgba(20, 18, 27, .9); }
-.commandPath { color: #9ba5ff; font: 600 9px/1 ui-monospace, monospace; }
-.commandPanel h3 { margin: 13px 0 6px; font-size: 19px; letter-spacing: -.025em; }
-.commandPanel > p { margin: 0 0 17px; color: #8f8798; font-size: 11px; line-height: 1.5; }
-.commandPanel dl { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; margin: 0 0 17px; }
-.commandPanel dl div { padding: 9px; border-radius: 8px; background: rgba(255,255,255,.035); }
-.commandPanel dt { margin-bottom: 5px; color: #706a79; font-size: 8px; }
-.commandPanel dd { margin: 0; color: #d9d4df; font-size: 10px; }
-.commandActions { display: flex; gap: 8px; }
-.commandActions span { padding: 8px 10px; border-radius: 7px; background: #5865f2; color: #fff; font-size: 9px; }
-.commandActions span:last-child { background: rgba(255,255,255,.05); color: #948d9e; }
-
-.logCanvas { padding: 24px; font: 500 9px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; }
-.logCanvas > p { display: grid; grid-template-columns: 56px 44px 1fr; gap: 10px; margin: 0; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.045); }
-.logCanvas time { color: #686170; }
-.logCanvas b { color: #8ce0ba; font-size: 8px; }
-.logCanvas span { color: #beb7c6; }
-.logDetail { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6px 14px; margin-top: 17px; padding: 14px; border-radius: 10px; background: rgba(255,255,255,.025); }
-.logDetail span { color: #6f6878; }
-.logDetail strong { color: #cbc5d1; font-weight: 550; }
+.placeholderMark i:last-child { transform: rotate(90deg); }
 
 .formCanvas { position: relative; max-width: 370px; margin: 20px auto; padding: 22px; border-radius: 11px; background: #f8f8fb; color: #25212a; box-shadow: 0 18px 55px rgba(0,0,0,.24); }
 .formAccent { position: absolute; inset: 0 0 auto; height: 7px; border-radius: 11px 11px 0 0; background: var(--project-accent); }
@@ -582,6 +587,7 @@
   .backLink { position: absolute; top: 56px; left: 0; margin: 0; }
   .hero h1 { font-size: clamp(55px, 18vw, 78px); }
   .tagline { font-size: 19px; }
+  .heroDescription { margin-top: 20px; font-size: 13px; line-height: 1.65; }
   .statusPanel { gap: 27px; margin-bottom: 74px; padding: 20px; }
   .historyBars { gap: 2px; }
   .overview, .features, .visuals { padding-block: 78px; }
@@ -590,14 +596,6 @@
   .visualGrid[data-count='3'] .visual:first-child { grid-column: auto; }
   .visualGrid[data-count='3'] .visual:first-child .imageFrame { aspect-ratio: 1800 / 527; }
   .imageFrame, .mockup { border-radius: 15px; }
-  .commandCanvas { grid-template-columns: 43px 1fr; }
-  .commandPanel { margin: 12px; padding: 15px; }
-  .commandPanel dl { grid-template-columns: 1fr; }
-  .commandPanel dl div:last-child { display: none; }
-  .commandRail b, .commandRail i { width: 23px; }
-  .logCanvas { padding: 16px; }
-  .logCanvas > p { grid-template-columns: 46px 38px 1fr; gap: 6px; font-size: 7px; }
-  .logDetail { display: none; }
   .formCanvas { margin: 13px; padding: 17px; }
   .relayCanvas { padding: 15px; }
   .relayPath { gap: 5px; }

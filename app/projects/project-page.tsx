@@ -29,55 +29,6 @@ function formatTime(value: string, locale: Locale) {
   }).format(new Date(value));
 }
 
-function StateBotCommandVisual({ label }: { label: string }) {
-  return (
-    <div className={`${styles.mockup} ${styles.commandMockup}`} role="img" aria-label={label}>
-      <div className={styles.mockupBar}>
-        <span><i /><i /><i /></span>
-        <small>statebot / command</small>
-      </div>
-      <div className={styles.commandCanvas}>
-        <div className={styles.commandRail} aria-hidden="true">
-          <b>SB</b><i /><i /><i />
-        </div>
-        <div className={styles.commandPanel}>
-          <span className={styles.commandPath}>/new-leader</span>
-          <h3>Leadership request</h3>
-          <p>Candidate and faction details are ready for review.</p>
-          <dl>
-            <div><dt>Candidate</dt><dd>@member</dd></div>
-            <div><dt>Faction</dt><dd>Selected role</dd></div>
-          </dl>
-          <div className={styles.commandActions}><span>Review request</span><span>Cancel</span></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function StateBotLogsVisual({ label }: { label: string }) {
-  return (
-    <div className={`${styles.mockup} ${styles.logsMockup}`} role="img" aria-label={label}>
-      <div className={styles.mockupBar}>
-        <span><i /><i /><i /></span>
-        <small>statebot / events</small>
-      </div>
-      <div className={styles.logCanvas}>
-        <p><time>18:33:35</time><b>INFO</b><span>bot.starting</span></p>
-        <p><time>18:33:35</time><b>INFO</b><span>health.server_started</span></p>
-        <p><time>18:33:36</time><b>READY</b><span>discord.client_ready</span></p>
-        <p><time>18:37:12</time><b>INFO</b><span>interaction.started</span></p>
-        <p><time>18:37:13</time><b>DONE</b><span>leader.assigned</span></p>
-        <div className={styles.logDetail}>
-          <span>service</span><strong>statebot</strong>
-          <span>durationMs</span><strong>842</strong>
-          <span>environment</span><strong>production</strong>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function MajesticFormVisual({ label }: { label: string }) {
   return (
     <div className={`${styles.mockup} ${styles.formMockup}`} role="img" aria-label={label}>
@@ -142,8 +93,19 @@ function ProjectVisualFrame({ visual }: { visual: ProjectVisual }) {
     );
   }
 
-  if (visual.kind === 'statebot-command') return <StateBotCommandVisual label={visual.title} />;
-  if (visual.kind === 'statebot-logs') return <StateBotLogsVisual label={visual.title} />;
+  if (visual.kind === 'placeholder') {
+    return (
+      <div
+        className={`${styles.mockup} ${styles.screenshotPlaceholder}`}
+        role="img"
+        aria-label={`${visual.title}. ${visual.placeholderLabel ?? ''}`}
+      >
+        <span className={styles.placeholderMark} aria-hidden="true"><i /><i /></span>
+        <p>{visual.placeholderLabel}</p>
+      </div>
+    );
+  }
+
   if (visual.kind === 'majestic-form') return <MajesticFormVisual label={visual.title} />;
   return <MajesticRelayVisual label={visual.title} />;
 }
@@ -181,6 +143,9 @@ export default async function ProjectPage({
             <p className={styles.eyebrow}>{copy.projectLabel} · {content.category}</p>
             <h1>{project.name}</h1>
             <p className={styles.tagline}>{content.tagline}</p>
+            {content.heroDescription ? (
+              <p className={styles.heroDescription}>{content.heroDescription}</p>
+            ) : null}
           </div>
 
           <div className={styles.logoFrame} aria-label={`${project.name} logo`}>
