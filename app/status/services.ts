@@ -57,6 +57,7 @@ export const serviceRegistry: readonly ServiceDefinition[] = [
     name: 'MajesticForms',
     description: 'Form delivery and processing.',
     group: 'Services',
+    monitorName: 'MajesticForms',
   },
 ] as const;
 
