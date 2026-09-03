@@ -111,7 +111,14 @@ jobs:
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
             "ec2-user@$LIGHTSAIL_HOST" \
-            "cd /home/ec2-user/raytimz-ops && git switch main && git pull --ff-only origin main && WEB_IMAGE='$DEPLOY_IMAGE' bash infrastructure/deploy/manual-deploy.sh --skip-git-pull"
+            "DEPLOY_IMAGE='$DEPLOY_IMAGE' flock -w 600 /tmp/raytimz-deploy.lock bash -s" <<'REMOTE'
+          set -Eeuo pipefail
+          cd /home/ec2-user/raytimz-ops
+          git switch main
+          git pull --ff-only origin main
+          sudo -n -H env WEB_IMAGE="$DEPLOY_IMAGE" \
+            bash infrastructure/deploy/manual-deploy.sh --skip-git-pull
+          REMOTE
 
       - name: Verify public routes
         run: |
