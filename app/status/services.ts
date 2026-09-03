@@ -51,6 +51,7 @@ export const serviceRegistry: readonly ServiceDefinition[] = [
     name: 'HobbsHelper',
     description: 'Discord assistant and supporting workflows.',
     group: 'Bots',
+    monitorName: 'HobbsHelper',
   },
   {
     id: 'majestic-forms',
